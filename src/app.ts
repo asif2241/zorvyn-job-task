@@ -2,7 +2,6 @@ import cookieParser from "cookie-parser"
 import express, { Request, Response, urlencoded } from "express"
 import cors from "cors"
 
-import "./app/config/passport"
 import { globalErrorHandler } from "./app/middlewares/globalErrorHandler"
 import notFound from "./app/middlewares/notFound"
 import { router } from "./app/routes"
