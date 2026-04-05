@@ -16,7 +16,9 @@ export enum TransactionCategory {
     HEALTHCARE = "HEALTHCARE",
     ENTERTAINMENT = "ENTERTAINMENT",
     EDUCATION = "EDUCATION",
+    SHOPPING = "SHOPPING",
     OTHER = "OTHER",
+
 }
 
 export interface IFinancialRecord {

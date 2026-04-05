@@ -56,7 +56,7 @@ FinancialRecordRoutes.get(
 
 FinancialRecordRoutes.get(
     "/summary/trends",
-    checkAuth(UserRole.ANALYST, UserRole.ADMIN, UserRole.SUPER_ADMIN),
+    checkAuth(...Object.values(UserRole)),
     FinancialRecordController.getTrends
 );
 

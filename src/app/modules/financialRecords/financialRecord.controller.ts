@@ -95,7 +95,8 @@ const getTrends = catchAsync(async (req: Request, res: Response, next: NextFunct
 });
 
 const getRecentActivity = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
-    const result = await FinancialRecordService.getRecentActivity();
+    const query = req.query;
+    const result = await FinancialRecordService.getRecentActivity(query as Record<string, string>);
     sendResponse(res, {
         success: true,
         statusCode: StatusCodes.OK,

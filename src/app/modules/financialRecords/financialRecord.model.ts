@@ -41,9 +41,9 @@ const financialRecordSchema = new Schema<IFinancialRecord>(
 );
 
 // filter out deleted records globally
-// financialRecordSchema.pre("find", function () {
-//     this.where({ isDeleted: false });
-// });
+financialRecordSchema.pre("find", function () {
+    this.where({ isDeleted: false });
+});
 
 // financialRecordSchema.pre("findOne", function () {
 //     this.where({ isDeleted: false });

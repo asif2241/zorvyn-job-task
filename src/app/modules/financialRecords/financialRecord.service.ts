@@ -143,6 +143,7 @@ const getOverviewSummary = async () => {
         }
     ]);
 
+
     const totalIncome = result.find(r => r._id === TransactionType.INCOME)?.total || 0;
     const totalExpense = result.find(r => r._id === TransactionType.EXPENSE)?.total || 0;
     const netBalance = totalIncome - totalExpense;
@@ -166,29 +167,51 @@ const getCategorySummary = async () => {
 };
 
 const getTrends = async (query: Record<string, string>) => {
-    // default to monthly, support "weekly" via query param
-    const groupBy = query.period === "weekly"
-        ? { year: { $isoWeekYear: "$date" }, week: { $isoWeek: "$date" } }
-        : { year: { $year: "$date" }, month: { $month: "$date" } };
+    const period = query.period || "monthly"; // daily | weekly | monthly
+
+    let groupBy: Record<string, any>;
+
+    if (period === "daily") {
+        groupBy = {
+            year: { $year: "$createdAt" },
+            month: { $month: "$createdAt" },
+            day: { $dayOfMonth: "$createdAt" }
+        };
+    } else if (period === "weekly") {
+        groupBy = {
+            year: { $isoWeekYear: "$createdAt" },
+            week: { $isoWeek: "$createdAt" }
+        };
+    } else {
+        // default: monthly
+        groupBy = {
+            year: { $year: "$createdAt" },
+            month: { $month: "$createdAt" }
+        };
+    }
 
     const result = await FinancialRecord.aggregate([
+        { $match: { isDeleted: false } },
         {
             $group: {
                 _id: { ...groupBy, type: "$type" },
-                total: { $sum: "$amount" }
+                total: { $sum: "$amount" },
+                count: { $sum: 1 }
             }
         },
-        { $sort: { "_id.year": 1, "_id.month": 1 } }
+        { $sort: { "_id.year": 1, "_id.month": 1, "_id.week": 1, "_id.day": 1 } }
     ]);
 
     return result;
 };
 
-const getRecentActivity = async () => {
+const getRecentActivity = async (query: Record<string, string>) => {
+    const limit = Number(query.limit) || 10;
     const records = await FinancialRecord.find()
         .sort("-createdAt")
-        .limit(10)
-        .populate("userId", "name email");
+        .limit(limit)
+        .select("amount type category createdAt notes")
+
 
     return records;
 };
