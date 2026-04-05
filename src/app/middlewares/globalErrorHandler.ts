@@ -42,7 +42,8 @@ export const globalErrorHandler = async (err: any, req: Request, res: Response, 
     else if (err.name === "ZodError") {
         const simplifiedError = handleZodError(err)
         statusCode = simplifiedError.statusCode;
-        message = simplifiedError.message
+        message = simplifiedError.message;
+        errorSources = simplifiedError.errorSources as TErrorSources[]
     }
     else if (err instanceof AppError) {
         statusCode = err.statusCode
