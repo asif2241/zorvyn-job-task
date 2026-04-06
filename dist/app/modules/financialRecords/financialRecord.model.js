@@ -13,11 +13,13 @@ const financialRecordSchema = new mongoose_1.Schema({
         type: String,
         enum: Object.values(financialRecord_interface_1.TransactionType),
         required: true,
+        index: true,
     },
     category: {
         type: String,
         enum: Object.values(financialRecord_interface_1.TransactionCategory),
         required: true,
+        index: true,
     },
     notes: {
         type: String,

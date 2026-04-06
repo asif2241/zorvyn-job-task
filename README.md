@@ -876,6 +876,97 @@ GET /api/users/64f1a2b3c4d5e6f7a8b9c0d0
 
 ---
 
+## 🔑 Auth API
+
+**Base URL:** `https://zorvyn-backend-int-job-task.vercel.app/api/v1/auth`
+
+---
+
+### Endpoints Overview
+
+| Method | Endpoint                       | Description                                   | Access    |
+| ------ | ------------------------------ | --------------------------------------------- | --------- |
+| POST   | `/api/v1/auth/login`           | Login with email & password                   | Public    |
+| POST   | `/api/v1/auth/refresh-token`   | Get new access token via refresh token cookie | Public    |
+| POST   | `/api/v1/auth/logout`          | Clear auth cookies                            | Public    |
+| POST   | `/api/v1/auth/change-password` | Change current user password                  | All roles |
+
+---
+
+### 1. Login
+
+**POST** `/api/v1/auth/login`
+
+**Request Body:**
+
+```json
+{
+  "email": "super@gmail.com",
+  "password": "12345678"
+}
+```
+
+**Success Response** `200 OK`:
+
+```json
+{
+  "success": true,
+  "statusCode": 200,
+  "message": "User logged in successfully",
+  "data": {
+    "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+    "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+    "user": {
+      "_id": "64f1a2b3c4d5e6f7a8b9c0d0",
+      "name": "Super Admin",
+      "email": "super@gmail.com",
+      "role": "SUPER_ADMIN",
+      "status": "ACTIVE",
+      "isDeleted": false,
+      "isBlocked": false,
+      "createdAt": "2025-01-15T10:30:00.000Z"
+    }
+  }
+}
+```
+
+> **Note:** `accessToken` and `refreshToken` are also set as `httpOnly` cookies automatically.
+
+---
+
+### 2. Refresh Token
+
+**POST** `/api/v1/auth/refresh-token`
+
+Reads the `refreshToken` from cookies and returns a new `accessToken`.
+
+> **Note:** Requires `refreshToken` cookie to be present in the request.
+
+---
+
+### 3. Logout
+
+**POST** `/api/v1/auth/logout`
+
+Clears both `accessToken` and `refreshToken` cookies from the browser.
+
+---
+
+### 4. Change Password
+
+**POST** `/api/v1/auth/change-password`
+
+**Access:** All authenticated roles — requires accessToken from the cookies, and an user can change only his own account password
+
+**Request Body:**
+
+```json
+{
+  "oldPassword": "12345678",
+  "newPassword": "newpassword123"
+}
+```
+
 ## Enums Reference
 
 ### User Role

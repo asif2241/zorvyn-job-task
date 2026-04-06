@@ -16,6 +16,6 @@ exports.FinancialRecordRoutes.patch("/:id", (0, checkAuth_1.checkAuth)(user_inte
 exports.FinancialRecordRoutes.delete("/:id", (0, checkAuth_1.checkAuth)(user_interface_1.UserRole.ADMIN, user_interface_1.UserRole.SUPER_ADMIN), financialRecord_controller_1.FinancialRecordController.deleteRecord);
 // Dashboard Summary
 exports.FinancialRecordRoutes.get("/summary/overview", (0, checkAuth_1.checkAuth)(...Object.values(user_interface_1.UserRole)), financialRecord_controller_1.FinancialRecordController.getOverviewSummary);
-exports.FinancialRecordRoutes.get("/summary/by-category", (0, checkAuth_1.checkAuth)(user_interface_1.UserRole.ANALYST, user_interface_1.UserRole.ADMIN, user_interface_1.UserRole.SUPER_ADMIN), financialRecord_controller_1.FinancialRecordController.getCategorySummary);
+exports.FinancialRecordRoutes.get("/summary/by-category", (0, checkAuth_1.checkAuth)(...Object.values(user_interface_1.UserRole)), financialRecord_controller_1.FinancialRecordController.getCategorySummary);
 exports.FinancialRecordRoutes.get("/summary/trends", (0, checkAuth_1.checkAuth)(...Object.values(user_interface_1.UserRole)), financialRecord_controller_1.FinancialRecordController.getTrends);
 exports.FinancialRecordRoutes.get("/summary/recent", (0, checkAuth_1.checkAuth)(...Object.values(user_interface_1.UserRole)), financialRecord_controller_1.FinancialRecordController.getRecentActivity);
