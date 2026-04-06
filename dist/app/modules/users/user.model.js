@@ -17,6 +17,11 @@ const userSchema = new mongoose_1.Schema({
         enum: Object.values(user_interface_1.UserStatus),
         default: user_interface_1.UserStatus.ACTIVE
     },
+    isDeleted: {
+        type: Boolean,
+        default: false
+    },
+    isBlocked: { type: Boolean, default: false },
 }, {
     timestamps: true,
     versionKey: false

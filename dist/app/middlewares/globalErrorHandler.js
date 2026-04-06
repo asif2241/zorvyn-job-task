@@ -49,6 +49,7 @@ const globalErrorHandler = (err, req, res, next) => __awaiter(void 0, void 0, vo
         const simplifiedError = (0, handleZodError_1.handleZodError)(err);
         statusCode = simplifiedError.statusCode;
         message = simplifiedError.message;
+        errorSources = simplifiedError.errorSources;
     }
     else if (err instanceof AppError_1.default) {
         statusCode = err.statusCode;

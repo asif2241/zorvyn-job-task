@@ -50,7 +50,7 @@ FinancialRecordRoutes.get(
 
 FinancialRecordRoutes.get(
     "/summary/by-category",
-    checkAuth(UserRole.ANALYST, UserRole.ADMIN, UserRole.SUPER_ADMIN),
+    checkAuth(...Object.values(UserRole)),
     FinancialRecordController.getCategorySummary
 );
 

@@ -13,11 +13,13 @@ const financialRecordSchema = new Schema<IFinancialRecord>(
             type: String,
             enum: Object.values(TransactionType),
             required: true,
+            index: true,
         },
         category: {
             type: String,
             enum: Object.values(TransactionCategory),
             required: true,
+            index: true,
         },
 
         notes: {
